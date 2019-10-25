@@ -13,7 +13,7 @@ sandwichQueries = [
 
 for query in sandwichQueries:
     arguments = {'keywords': query,
-                    'limit': 150,
+                    'limit': 100,
                     'format': 'jpg',
                     'thumbnail_only': True,
                     'no_directory': True}

@@ -17,11 +17,9 @@ def addImage(imagePath, structure, ingredient):
     print(destination)
 
     img = cv2.imread(imagePath)
-
-    print(img)
-    cv2.imshow("picture",img)
     img = cv2.resize(img, (200, 200))
     cv2.imwrite(destination, img)
+    os.remove(imagePath)
 
 
 
@@ -37,8 +35,17 @@ imageDisplay = pygame.display.set_mode((screenWidth,screenHeight))
 clock = pygame.time.Clock()
 
 pictures = os.listdir('downloads/ - thumbnail/')
+pictures.sort()
 currentPicture = 'downloads/ - thumbnail/' + pictures.pop(0)
-imageTexture = pygame.image.load(currentPicture)
+foundGoodImage = False
+while not foundGoodImage:
+    try:
+        imageTexture = pygame.image.load(currentPicture)
+        foundGoodImage = True
+    except:
+        print("That didint wanna open")
+        os.remove(currentPicture)
+        currentPicture = 'downloads/ - thumbnail/' + pictures.pop(0)
 imageDisplay.blit(imageTexture, ((screenWidth - imageTexture.get_width()) / 2, (screenHeight - imageTexture.get_height()) / 2))
 pygame.display.update()
 
@@ -70,6 +77,7 @@ while not done:
             # Backspace to indicate that the image is not a sandwich
             if event.key == pygame.K_BACKSPACE:
                 print("Not a sandwich")
+                os.remove(currentPicture)
                 newImage = True
 
             elif event.key == pygame.K_ESCAPE:
@@ -126,7 +134,17 @@ while not done:
     if newImage:
         imageDisplay.fill((0, 0, 0))
         currentPicture = 'downloads/ - thumbnail/' + pictures.pop(0)
-        imageTexture = pygame.image.load(currentPicture)
+
+        foundGoodImage = False
+        while not foundGoodImage:
+            try:
+                imageTexture = pygame.image.load(currentPicture)
+                foundGoodImage = True
+            except:
+                print("That didint wanna open")
+                os.remove(currentPicture)
+                currentPicture = 'downloads/ - thumbnail/' + pictures.pop(0)
+
         imageDisplay.blit(imageTexture, ((screenWidth - imageTexture.get_width()) / 2, (screenHeight - imageTexture.get_height()) / 2))
         pygame.display.update()
     clock.tick(20)
