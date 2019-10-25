@@ -144,11 +144,3 @@ if __name__ == '__main__':
 
 # Save the final model
 model.save('model.h5')
-
-# Use these to load a model from an h5 file
-# newModel = tf.keras.models.load_model('model.h5')
-# newModel.summary()
-
-# Use this to run the model on new data
-# https://www.tensorflow.org/tutorials/load_data/csv
-# predictions = model.predict(test_data)
